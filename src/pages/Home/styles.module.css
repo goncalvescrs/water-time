@@ -1,7 +1,16 @@
-#root{
-    background-color: #fff;
-    color: #548eeb;
-    /* margin: 0 auto; */
-    /* padding: 2rem; */
-    /* text-align: center; */
+.outerContainer {
+    background-color: #397097; /* Cor do fundo em toda a largura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 80px;
+}
+
+.topSide {
+    max-width: 700px; /* Largura máxima de 900px */
+    width: 100%; /* Garantir que o contêiner possa ocupar toda a largura disponível */
+    background-color: #397097; /* Mesma cor de fundo */
+    padding: 0px; /* Espaçamento interno opcional */
+    box-sizing: border-box; 
+    /* text-align: center;  */
 }

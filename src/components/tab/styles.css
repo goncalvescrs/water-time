@@ -1,0 +1,28 @@
+/* styles.css */
+
+.custom-tabs {
+    color: #FFFFFF; 
+    margin-top: 40px;
+    border-color: #7CA1BB
+}
+
+.custom-tabs .nav-link {
+    color: #c7c7c7 ;/* Altera a cor do texto das abas */
+    
+}
+
+.custom-tabs .nav-link.active {
+    border-style: solid;            
+    border-width: 1px 1px 0px 1px; 
+    background-color: #336588; 
+    color: #FFFFFF; 
+    border-color: #7CA1BB
+}
+
+.custom-tabs .nav-link:hover {
+    color: #FFF; /* Altera a cor do texto das abas ao passar o mouse */
+    border-style: solid;    
+    background-color: #336588;         
+    border-width: 1px 1px 0 1px;
+    border-color: #7CA1BB
+}  

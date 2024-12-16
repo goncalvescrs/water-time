@@ -1,56 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './styles.module.css'
 import WaterTime from '../../components/waterTime/WaterTime';
-import Informations from '../../components/informations/Informations';
 import ModalDrink from '../../components/modal/ModalDrink';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { dailyGoalCalculate } from '../../utils/functions';
+import { dailyGoalCalculate, PreventPageReload } from '../../utils/functions';
+import TabInfo from '../../components/tab/TabInfo';
+import { UserContext } from '../../context/UserContext';
+import Header from '../../components/header/Header';
+import AboutWaterTime from '../../components/about/AboutWaterTime';
+import Footer from '../../components/footer/Footer';
 
 const Home = () => {
-    const dailyGoal = dailyGoalCalculate(23, 56);
-    const sleepHours = 7.5;
-    const bottleCapacity = 500; // Capacidade da garrafinha em ml 
-
-    const drinkingAmount = 250; // Quantidade de água a ser bebida em cada pausa 
-    const wakingHours = 24 - sleepHours; // Horas acordadas no dia 
-    const pauses = Math.ceil(dailyGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
-    const interval1 = wakingHours / pauses; // Intervalo em horas entre as pausas
-    const interval = 15/3600; // 10 segundos para teste
-
+    const { userData } = useContext(UserContext);
+    if (!userData.name ) return;
 
     const [show, setShow] = useState(false);
     const [cups, setCups] = useState(0);
     const [cancel, setCancel] = useState(0);
     const [nextReminder, setNextReminder] = useState(new Date());
-    const [currentBottleVolume, setCurrentBottleVolume] = useState(bottleCapacity);
-    const [bottleAlmostEmpty, setBottleAlmostEmpty] = useState(false); // Novo estado para controlar quando a garrafa está quase vazia
+    const [currentBottleVolume, setCurrentBottleVolume] = useState(0);        
+    const [isCounting, setIsCounting] = useState(()=> localStorage.getItem('userId') !== null); // Recupera o estado 'userId' do localStorage e define 'isCounting' como true ou false 
+    const [toastShown, setToastShown] = useState(false); // Novo estado para controlar o toast
 
-    const handleCancel = () => {
-        setCancel(prevCount => prevCount + 1);
-        setShow(false);
-    };
-    const handleAdd = () => {
-        setCups(prevCount => prevCount + 1);
-        setShow(false);
-        setCurrentBottleVolume(prevVolume => {
-            const newVolume = prevVolume - drinkingAmount;
-            if(newVolume < drinkingAmount) {
-                // setBottleAlmostEmpty(true);
-                toast.warn("Sua garrafinha está quase vazia. Por favor, encha a garrafinha!");
-                setTimeout(() => { setCurrentBottleVolume(bottleCapacity); }, 5000);
-                return newVolume;
-            }
-            return newVolume;
-        });
-    };
-    
+    const dailyGoal = dailyGoalCalculate(userData.age, userData.weight);
+    const sleepHours = userData.sleepHours; 
+    const bottleCapacity = userData.bottle;
+    const drinkingAmount = 250; // Quantidade de água a ser bebida em cada pausa 
+    const wakingHours = 24 - sleepHours; // Horas acordadas no dia 
+    const pauses = Math.ceil(dailyGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
+    const interval = wakingHours / pauses; // Intervalo em horas entre as pausas
+    const interval2 = 10/3600; // 10 segundos para teste
 
-    console.log(sleepHours);
-    console.log(wakingHours);
-    console.log(interval1);
+    useEffect(() => { 
+        if (userData && userData.age) { 
+            setCurrentBottleVolume(userData.bottle); 
+        } 
+    }, [userData]);
 
     useEffect(() => {
+        if (!isCounting) return; // inicia se tiver userId
+
+        if (!toastShown) { // Exibe um toast quando o contador começa 
+            toast.info("O timer já começou a contar!"); 
+            setToastShown(true); // Marca que o toast já foi exibido 
+        };
+
         const now = new Date(); // Define o próximo lembrete
         const firstReminder = new Date(now.getTime() + interval * 60 * 60 * 1000);
         setNextReminder(firstReminder);
@@ -63,7 +58,42 @@ const Home = () => {
         }, interval * 60 * 60 * 1000);
 
         return () => clearInterval(reminderInterval);
-    }, [interval, currentBottleVolume]);
+    }, [isCounting, interval, currentBottleVolume, userData]);
+
+    const handleFinish = () => {
+        setIsCounting(false);
+        toast("Terminou");
+    }
+    const handleCancel = () => {
+        setCancel(prevCount => prevCount + 1);
+        setShow(false);
+    };
+
+    const handleAdd = () => {
+        setCups(prevCount => prevCount + 1);
+        setShow(false);
+        setCurrentBottleVolume(prevVolume => {
+            try {
+              const newVolume = prevVolume - drinkingAmount;
+              if (newVolume < drinkingAmount) {
+                toast.warn("Sua garrafinha está quase vazia. Por favor, encha a garrafinha!");
+          
+                setTimeout(() => {
+                  setCurrentBottleVolume(bottleCapacity);
+                }, 5000);
+          
+                return newVolume; 
+              }
+              return newVolume;
+            } catch (error) {
+              console.error('Erro ao atualizar o volume da garrafinha:', error);
+              toast.error('Ocorreu um erro ao tentar atualizar o volume da garrafinha.');
+              return prevVolume; // Retorna o volume anterior em caso de erro
+            }
+          });
+          
+    };
+
     
     return (
         <>
@@ -74,24 +104,34 @@ const Home = () => {
                     onClick={() => handleAdd()}
                 />
             ) : null}
+            <PreventPageReload />
             <ToastContainer />
 
-            <h1>Water Time</h1>
+            <Header />
+            <div className={styles.outerContainer}>
+                <div className={styles.topSide}>
+                    <WaterTime 
+                        cups={cups}
+                        pauses={pauses}
+                        dailyGoal={dailyGoal}
+                        currentBottleVolume={currentBottleVolume}
+                        bottleCapacity={bottleCapacity}
+                        handleFinish={() => handleFinish()}
+                    />
+                    
+                    <TabInfo 
+                        date={nextReminder}
+                        cups={cups}
+                        cancel={cancel}
+                        bottleCapacity={bottleCapacity}
+                        currentBottleVolume={currentBottleVolume}
+                    />
+                </div>
+            </div>
 
-            <WaterTime 
-                cups={cups}
-                pauses={pauses}
-                dailyGoal={dailyGoal}
-            />
+            <AboutWaterTime />
 
-            <Informations 
-                date={nextReminder}
-                drinkWater={cups}
-                cancelWater={cancel}
-                bottleCapacity={bottleCapacity}
-                currentBottleVolume={currentBottleVolume}
-            />
-
+            <Footer />
 
         </>
     )

@@ -3,9 +3,12 @@ import { IoWater } from "react-icons/io5";
 import styles from './styles.module.css'
 import { useEffect, useState } from "react";
 import { formatarNumero } from "../../utils/functions";
+import { toast } from "react-toastify";
+import { GiWaterRecycling } from "react-icons/gi";
 
 
-const WaterTime = ({ ...props }) => {
+
+const WaterTime = ( {handleFinish, ...props} ) => {
     const [liters, setLiters] = useState(0);
     const [percentage, setPercentage] = useState(0);
 
@@ -25,11 +28,8 @@ const WaterTime = ({ ...props }) => {
         updateWaterIntake(props.cups);
 
         if (props.cups === MAX_CUPS) { 
-            const timer = setTimeout(() => { 
-                alert("Já tomou sua quantidade de água diária!"); 
-            }, 3000); // 5 segundos de delay 
-
-            return () => clearTimeout(timer); // Limpa o timer se o componente desmontar 
+            handleFinish() 
+            return
         } 
         
     }, [props.cups]);
@@ -38,7 +38,7 @@ const WaterTime = ({ ...props }) => {
         <>
             <div className={styles.container}>
                 <div className={styles.sideInfo}>
-                    <FaGlassWater size={70} color='#2196f3'/>
+                    <FaGlassWater size={70} color='#FFFFFF'/>
                     <span className={styles.currentCups}>{`${props.cups}/${MAX_CUPS}`}</span>
                 </div>
                 <div>
@@ -48,10 +48,14 @@ const WaterTime = ({ ...props }) => {
                     </div>
                 </div>
                 <div className={styles.sideInfo}>
-                    <IoWater size={70} color='#2196f3'/>
+                    <IoWater size={70} color='#FFFFFF'/>
                     <span className={styles.currentLiters}>{`${liters}L/${MAX_LITERS}L`}</span>
                 </div>
             </div>
+                <div className={styles.bottom}>
+                    <GiWaterRecycling size={20} color='#FFFFFF' style={{marginRight: "10px"}}/>
+                    <span className={{}}> {`Capacidade da garrafa - ${props.currentBottleVolume} ml / ${props.bottleCapacity} ml`}</span>
+                </div>
         </>
     )
 

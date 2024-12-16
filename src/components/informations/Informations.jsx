@@ -1,4 +1,6 @@
-const Informations = ({date, drinkWater, cancelWater, bottleCapacity, currentBottleVolume}) => {
+import styles from './styles.module.css'
+
+const Informations = ({date, cups, cancel, bottleCapacity, currentBottleVolume}) => {
 
     const nextDrink = () => {
         // const date = nextReminder
@@ -12,12 +14,23 @@ const Informations = ({date, drinkWater, cancelWater, bottleCapacity, currentBot
 
     return (
         <>
-            <div>
-                <h1>Dados</h1>
-                <p>Quantas vezes bebei água: {drinkWater} </p>
-                <p>Quantas vezes cancelei: {cancelWater}</p>
-                <p>Capacidade da garrafa: {`${currentBottleVolume} ml / ${bottleCapacity} ml`}</p>
-                <p>Próximo lembrete para beber água: {nextDrink()}</p>
+            <div className={styles.container}>
+                <h5>Informações da sua méta diaria</h5>
+                <ul className={styles.textInfo}>
+                    <li> Horário do próximo lembrete: 
+                        <span className={styles.info}> {nextDrink()}</span>
+                    </li>
+                    <li> Quantas vezes fiz a pausa: 
+                        <span className={styles.info}> {cups}</span>
+                    </li>
+                    <li> Quantas vezes cancelei: 
+                        <span className={styles.info}> {cancel}</span>
+                    </li>
+                    <li> Capacidade total da garrafa: 
+                        <span className={styles.info}> {`${bottleCapacity} ml`}</span>
+                    </li>
+                    
+                </ul>
             </div>
         </>
     )
