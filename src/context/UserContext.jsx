@@ -51,6 +51,7 @@ export const UserProvider = ({children}) => {
           setUserData(userItems[0]);
         } else {
           console.warn('Nenhum item encontrado com o id fornecido.');
+          navigate('/login');
         }
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
