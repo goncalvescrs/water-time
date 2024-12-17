@@ -8,24 +8,13 @@ import Register from "../pages/register/Register";
 
 const AppRoutes = () => {
     const { userId } = useContext(UserContext);
-    // console.log(`Usúario logado: ${userId}`)
-
     
-
     return (
         <>
             <Routes>
-            {userId ? (
-                    <>
-                        <Route exact path='/' element={<Home />} />
-                    </>
-                ) : (
-                    <>
-                        <Route exact path='/login' element={<Login />} />
-                        <Route exact path='/cadastro' element={<Register />} />
-                    </>
-                )
-            }
+                <Route exact path='/login' element={<Login />} />
+                <Route exact path='/cadastro' element={<Register />} />
+                {userId ? <Route exact path='/' element={<Home />} /> : null}
             </Routes>
         </>
     )

@@ -43,12 +43,9 @@ export const UserProvider = ({children}) => {
       try {
         const response = await api.get('/users'); // Substitua pela sua URL de API
         const data = response.data;
-        console.log('Dados retornados da API:', data);
-        // console.log('Procurando por id:', id);
     
         // Verifica o tipo do id para garantir que a comparação seja feita corretamente
         const userItems = data.filter(item => String(item.id) === String(id));
-        console.log('Itens filtrados:', userItems);
     
         if (userItems.length > 0) {
           setUserData(userItems[0]);

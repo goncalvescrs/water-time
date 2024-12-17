@@ -1,0 +1,22 @@
+.modalContainer{
+    background-color: rgba(0, 0, 0, 0.16);
+}
+
+.buttonOk {
+    background-color: #397097;
+}
+.buttonOk:hover {
+    background-color: #336588;
+}
+
+.modalHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalText{
+    font-size: 18px;
+    font-weight: 500;
+    color: #202020e2;
+}

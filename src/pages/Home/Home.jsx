@@ -4,7 +4,7 @@ import WaterTime from '../../components/waterTime/WaterTime';
 import ModalDrink from '../../components/modal/ModalDrink';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { dailyGoalCalculate, PreventPageReload } from '../../utils/functions';
+import { dailyGoalCalculate, getEndOfDay, PreventPageReload } from '../../utils/functions';
 import TabInfo from '../../components/tab/TabInfo';
 import { UserContext } from '../../context/UserContext';
 import Header from '../../components/header/Header';
@@ -13,7 +13,7 @@ import Footer from '../../components/footer/Footer';
 
 const Home = () => {
     const { userData } = useContext(UserContext);
-    if (!userData.name ) return;
+    if(!userData || !userData.age) return;
 
     const [show, setShow] = useState(false);
     const [cups, setCups] = useState(0);
@@ -22,6 +22,7 @@ const Home = () => {
     const [currentBottleVolume, setCurrentBottleVolume] = useState(0);        
     const [isCounting, setIsCounting] = useState(()=> localStorage.getItem('userId') !== null); // Recupera o estado 'userId' do localStorage e define 'isCounting' como true ou false 
     const [toastShown, setToastShown] = useState(false); // Novo estado para controlar o toast
+    const [startTime, setStartTime] = useState(new Date());
 
     const dailyGoal = dailyGoalCalculate(userData.age, userData.weight);
     const sleepHours = userData.sleepHours; 
@@ -30,7 +31,13 @@ const Home = () => {
     const wakingHours = 24 - sleepHours; // Horas acordadas no dia 
     const pauses = Math.ceil(dailyGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
     const interval = wakingHours / pauses; // Intervalo em horas entre as pausas
+    const endOfDay = getEndOfDay(startTime, wakingHours); // Calcula o horario de termino
+
     const interval2 = 10/3600; // 10 segundos para teste
+
+    useEffect(() => {
+        setStartTime(new Date()); // Define o horário de início quando o componente é montado
+    }, []);
 
     useEffect(() => { 
         if (userData && userData.age) { 
@@ -39,7 +46,7 @@ const Home = () => {
     }, [userData]);
 
     useEffect(() => {
-        if (!isCounting) return; // inicia se tiver userId
+        if (!isCounting) return; // inicia o contador quando algem logar
 
         if (!toastShown) { // Exibe um toast quando o contador começa 
             toast.info("O timer já começou a contar!"); 
@@ -51,19 +58,23 @@ const Home = () => {
         setNextReminder(firstReminder);
 
         const reminderInterval = setInterval(() => {
-            setShow(true); // Abre o modal 
 
+            setShow(true); // Abre o modal após o intervalo inicial
             const next = new Date(new Date().getTime() + interval * 60 * 60 * 1000);
             setNextReminder(next);
+
         }, interval * 60 * 60 * 1000);
 
         return () => clearInterval(reminderInterval);
-    }, [isCounting, interval, currentBottleVolume, userData]);
+    }, [isCounting, interval]);
+
+    currentBottleVolume
 
     const handleFinish = () => {
+        toast.info("Acabou por Hoje! ");
         setIsCounting(false);
-        toast("Terminou");
-    }
+    };
+
     const handleCancel = () => {
         setCancel(prevCount => prevCount + 1);
         setShow(false);
@@ -76,7 +87,7 @@ const Home = () => {
             try {
               const newVolume = prevVolume - drinkingAmount;
               if (newVolume < drinkingAmount) {
-                toast.warn("Sua garrafinha está quase vazia. Por favor, encha a garrafinha!");
+                toast.warn("Sua garrafa está quase vazia. Por favor, encha-a!");
           
                 setTimeout(() => {
                   setCurrentBottleVolume(bottleCapacity);
@@ -88,9 +99,9 @@ const Home = () => {
             } catch (error) {
               console.error('Erro ao atualizar o volume da garrafinha:', error);
               toast.error('Ocorreu um erro ao tentar atualizar o volume da garrafinha.');
-              return prevVolume; // Retorna o volume anterior em caso de erro
+              return prevVolume;
             }
-          });
+        });
           
     };
 
@@ -105,7 +116,9 @@ const Home = () => {
                 />
             ) : null}
             <PreventPageReload />
-            <ToastContainer />
+            <ToastContainer 
+                hideProgressBar={true}
+            />
 
             <Header />
             <div className={styles.outerContainer}>
@@ -116,6 +129,7 @@ const Home = () => {
                         dailyGoal={dailyGoal}
                         currentBottleVolume={currentBottleVolume}
                         bottleCapacity={bottleCapacity}
+                        endOfDay={endOfDay}
                         handleFinish={() => handleFinish()}
                     />
                     
@@ -125,6 +139,7 @@ const Home = () => {
                         cancel={cancel}
                         bottleCapacity={bottleCapacity}
                         currentBottleVolume={currentBottleVolume}
+                        endOfDay={endOfDay}
                     />
                 </div>
             </div>

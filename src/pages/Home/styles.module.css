@@ -4,13 +4,15 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 80px;
+    font-family: 'Poppins', sans-serif;  
+
 }
 
 .topSide {
-    max-width: 700px; /* Largura máxima de 900px */
-    width: 100%; /* Garantir que o contêiner possa ocupar toda a largura disponível */
-    background-color: #397097; /* Mesma cor de fundo */
-    padding: 0px; /* Espaçamento interno opcional */
+    max-width: 700px; 
+    width: 100%; 
+    background-color: #397097; 
+    padding: 0px; 
     box-sizing: border-box; 
     /* text-align: center;  */
 }

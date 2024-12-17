@@ -1,33 +1,38 @@
+import react from 'react';
 import styles from './styles.module.css'
+import { IoIosArrowForward } from "react-icons/io";
+import { formatHours } from '../../utils/functions';
 
-const Informations = ({date, cups, cancel, bottleCapacity, currentBottleVolume}) => {
 
-    const nextDrink = () => {
-        // const date = nextReminder
-        const hours = date.getHours(); 
-        const minutes = date.getMinutes();
-        // Adiciona zero à esquerda se os minutos forem menores que 10 
-        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
-        return (`${hours}:${formattedMinutes}`);
-    }
+const Informations = ({date, cancel, endOfDay}) => {
+    const nextDrink = formatHours(date.getHours(), date.getMinutes());
+    const endTime = formatHours(endOfDay.getHours(), endOfDay.getMinutes());
 
     return (
         <>
             <div className={styles.container}>
                 <h5>Informações da sua méta diaria</h5>
-                <ul className={styles.textInfo}>
-                    <li> Horário do próximo lembrete: 
-                        <span className={styles.info}> {nextDrink()}</span>
+                <ul className={styles.infoBox}>
+                    <li className={styles.textInfo}> 
+                        <IoIosArrowForward size={20} style={{marginRight: "10px"}}/>
+
+                        Horário do próximo lembrete: 
+                        <span className={styles.info}> {nextDrink}</span>
                     </li>
-                    <li> Quantas vezes fiz a pausa: 
+                    {/* <li>
+                        <IoIosArrowForward size={20} style={{marginRight: "10px"}}/>
+                        Quantas vezes fiz a pausa: 
                         <span className={styles.info}> {cups}</span>
-                    </li>
-                    <li> Quantas vezes cancelei: 
+                    </li> */}
+                    <li>
+                        <IoIosArrowForward size={20} style={{marginRight: "10px"}}/>
+                        Quantas vezes cancelei: 
                         <span className={styles.info}> {cancel}</span>
                     </li>
-                    <li> Capacidade total da garrafa: 
-                        <span className={styles.info}> {`${bottleCapacity} ml`}</span>
+                    <li> 
+                        <IoIosArrowForward size={20} style={{marginRight: "10px"}}/>
+                        Horário Final: 
+                        <span className={styles.info}> {endTime}</span>
                     </li>
                     
                 </ul>

@@ -3,6 +3,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Informations from '../informations/Informations';
 import './styles.css'
 import InfoUser from '../infoUser/InfoUser';
+import Dashboard from '../dashboard/Dashboard';
 
 function TabInfo(props) {
   
@@ -20,16 +21,7 @@ function TabInfo(props) {
           cancel={props.cancel}
           bottleCapacity={props.bottleCapacity}
           currentBottleVolume={props.currentBottleVolume}
-        />
-      </Tab>
-
-      <Tab eventKey="profile" title="Dashboard">
-        <Informations
-          date={props.date}
-          cups={props.cups}
-          cancel={props.cancel}
-          bottleCapacity={props.bottleCapacity}
-          currentBottleVolume={props.currentBottleVolume}
+          endOfDay={props.endOfDay}
         />
       </Tab>
 
@@ -37,6 +29,9 @@ function TabInfo(props) {
         <InfoUser/>
       </Tab>
 
+      <Tab eventKey="profile" title="Dashboard">
+        <Dashboard/>
+      </Tab>
     </Tabs>
   );
 }

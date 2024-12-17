@@ -16,6 +16,7 @@ import { RiInformation2Fill } from "react-icons/ri";
 
 function Header() {
     const { handleLogout } = useContext(UserContext);
+    const { userData } = useContext(UserContext);
     
   return (
     <>
@@ -47,6 +48,8 @@ function Header() {
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
+                                    <Dropdown.Item href="">Olá {userData.name}</Dropdown.Item>
+                                    <Dropdown.Divider />
                                     <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
                                     <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
                                     <Dropdown.Divider />

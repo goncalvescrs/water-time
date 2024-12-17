@@ -1,0 +1,75 @@
+.page {
+  display: flex;
+  /* flex-direction: column;  */
+  justify-content: center; 
+  align-items: center;     
+  min-height: 100vh;       
+  background-color: #397097;
+  color: #ffffff99; 
+}
+
+.container {
+  width: 80%;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  padding: 2rem;
+  background-color: rgb(242, 242, 242);
+  border-radius: 6px; 
+  color: #000;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 30px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.header-box,
+.form-signin,
+.bottom-box {
+  width: 100%;
+  max-width: 360px; 
+  text-align: center; 
+  margin: 3rem auto;
+}
+
+
+.brand-box {
+  color: #FFF;
+  display: flex;
+  align-items: center;
+}
+
+.brand-name {
+  font-size: 50px;
+}
+
+.button {
+  background-color: #383838; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+}
+
+.button:hover {
+  background-color: #222222; 
+}
+
+.register {
+  color: #ffffffc2;
+}

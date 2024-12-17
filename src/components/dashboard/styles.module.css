@@ -5,16 +5,6 @@
     background-color: #336588;
     color: #fff;
     width: 100%;
-    margin: -16px 0 0px 0;
+    margin: -16px 0 20px 0;
     padding: 25px 0 10px 20px ;
-}
-
-.textInfo {
-    margin-top: 15px;
-    list-style: none;
-}
-
-.info {
-    font-size: 18px;
-    font-weight: bold;
 }

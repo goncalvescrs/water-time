@@ -9,11 +9,21 @@
     padding: 25px 0 10px 20px ;
 }
 
-.textInfo {
+.infoBox {
     margin-top: 15px;
+}
+.infoBox li {
+    list-style: none;
+}
+
+.textInfo {
+    display: flex;
+    align-items: center;
+    list-style: none;
 }
 
 .info {
     font-size: 18px;
     font-weight: bold;
+    margin-left: 5px;
 }

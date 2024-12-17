@@ -3,10 +3,7 @@ import { IoWater } from "react-icons/io5";
 import styles from './styles.module.css'
 import { useEffect, useState } from "react";
 import { formatarNumero } from "../../utils/functions";
-import { toast } from "react-toastify";
-import { GiWaterRecycling } from "react-icons/gi";
-
-
+import { TbBottleFilled } from "react-icons/tb";
 
 const WaterTime = ( {handleFinish, ...props} ) => {
     const [liters, setLiters] = useState(0);
@@ -15,6 +12,7 @@ const WaterTime = ( {handleFinish, ...props} ) => {
     const MAX_CUPS = props.pauses;
     const MAX_LITERS = formatarNumero(props.dailyGoal / 1000); // convertido para litros e formatado pra aparecer 1 numero apos o ponto
     const CUP_VOLUME = 250; // ML
+    const endOfDay = props.endOfDay;
 
     const updateWaterIntake = (cups) => { 
         const liters = (cups * CUP_VOLUME) / 1000; // Calcula litros baseados na quantidade de copos 
@@ -24,15 +22,34 @@ const WaterTime = ( {handleFinish, ...props} ) => {
         setPercentage(percentage); 
     }; 
     
-    useEffect(() => { 
-        updateWaterIntake(props.cups);
+    // useEffect(() => { 
+    //     updateWaterIntake(props.cups);
 
-        if (props.cups === MAX_CUPS) { 
-            handleFinish() 
-            return
-        } 
+    //     if (props.cups === MAX_CUPS) { 
+    //         handleFinish() 
+    //         return
+    //     } 
         
-    }, [props.cups]);
+    // }, [props.cups]);
+
+    useEffect(() => { 
+        if (endOfDay) {
+            const currentTime = new Date().getTime();
+            const endTime = props.endOfDay.getTime();
+        
+            updateWaterIntake(props.cups);
+        
+            if (currentTime >= endTime) {
+            handleFinish();
+            return;
+            }
+        
+            if (props.cups === MAX_CUPS) { 
+            handleFinish();
+            return;
+            } 
+        }
+    }, [props.cups, props.endOfDay]);
 
     return (
         <>
@@ -53,8 +70,8 @@ const WaterTime = ( {handleFinish, ...props} ) => {
                 </div>
             </div>
                 <div className={styles.bottom}>
-                    <GiWaterRecycling size={20} color='#FFFFFF' style={{marginRight: "10px"}}/>
-                    <span className={{}}> {`Capacidade da garrafa - ${props.currentBottleVolume} ml / ${props.bottleCapacity} ml`}</span>
+                    <TbBottleFilled size={20} color='#FFFFFF' style={{marginRight: "10px"}}/>
+                    <span className={{}}> {`Capacidade da garrafa: ${props.currentBottleVolume} ml / ${props.bottleCapacity} ml`}</span>
                 </div>
         </>
     )
