@@ -64,7 +64,3 @@ Um Timer Online de Hidratação para Melhorar Seu Bem-Estar
   - eslint-plugin-react
   - eslint-plugin-react-hooks
   - eslint-plugin-react-refresh
-
----
-
-![Alterdata Logo](https://pbs.twimg.com/profile_images/1570492050675490817/74R-W1qz_400x400.jpg)
