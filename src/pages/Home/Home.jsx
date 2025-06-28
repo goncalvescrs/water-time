@@ -15,62 +15,44 @@ import Header from "../../components/header/Header";
 import AboutWaterTime from "../../components/about/AboutWaterTime";
 import Footer from "../../components/footer/Footer";
 import { useNavigate } from "react-router-dom";
+import ModalSettings from "../../components/modalSettings/ModalSettings";
+import { Button } from "react-bootstrap";
 
 const Home = () => {
-  // const user = []
-  const navigate = useNavigate();
-
   const { userData } = useContext(UserContext);
-  //   if (!userData || !userData.age) {
-  //     navigate("/login");
-  //   }
-
+  console.log(userData);
+  const [user, setUser] = useState(userData || {});
   const [show, setShow] = useState(false);
   const [cups, setCups] = useState(0);
   const [cancel, setCancel] = useState(0);
   const [nextReminder, setNextReminder] = useState(new Date());
   const [currentBottleVolume, setCurrentBottleVolume] = useState(0);
-  const [isCounting, setIsCounting] = useState(
-    () => localStorage.getItem("userId") !== null
-  ); // Recupera o estado 'userId' do localStorage e define 'isCounting' como true ou false
-  const [toastShown, setToastShown] = useState(false); // Novo estado para controlar o toast
+  const [isCounting, setIsCounting] = useState(false);
+  const [toastShown, setToastShown] = useState(false);
   const [startTime, setStartTime] = useState(new Date());
+  const [showSettings, setShowSettings] = useState(false);
+  const [showButtonStart, setShowButtonStart] = useState(true);
 
-  //   const dailyGoal = dailyGoalCalculate(userData.age, userData.weight);
-  //   const sleepHours = userData.sleepHours;
-  //   const bottleCapacity = userData.bottle;
-
-  const dailyGoal = dailyGoalCalculate(31, 87);
-  const sleepHours = 8;
-  const bottleCapacity = 600;
+  const waterGoal = dailyGoalCalculate(user.age, user.weight);
+  const sleepHours = userData.sleep;
+  const bottleCapacity = userData.bottle;
   const drinkingAmount = 250; // Quantidade de água a ser bebida em cada pausa
   const wakingHours = 24 - sleepHours; // Horas acordadas no dia
-  const pauses = Math.ceil(dailyGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
-  const interval1 = wakingHours / pauses; // Intervalo em horas entre as pausas
+  const pauses = Math.ceil(waterGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
+  const interval = wakingHours / pauses; // Intervalo em horas entre as pausas
   const endOfDay = getEndOfDay(startTime, wakingHours); // Calcula o horario de termino
 
-  const interval = 10 / 3600; // 10 segundos para teste
+  function breakCalculate(age) {}
 
   useEffect(() => {
-    setStartTime(new Date()); // Define o horário de início quando o componente é montado
-  }, []);
-
-  useEffect(() => {
-    if (userData && userData.age) {
-      setCurrentBottleVolume(userData.bottle);
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    // if (!isCounting) return; // inicia o contador quando algem logar
-
+    if (!isCounting) return;
     if (!toastShown) {
-      // Exibe um toast quando o contador começa
       toast.info("O timer já começou a contar!");
-      setToastShown(true); // Marca que o toast já foi exibido
+      setToastShown(true);
     }
 
-    const now = new Date(); // Define o próximo lembrete
+    // Define o próximo lembrete
+    const now = new Date();
     const firstReminder = new Date(now.getTime() + interval * 60 * 60 * 1000);
     setNextReminder(firstReminder);
 
@@ -83,7 +65,7 @@ const Home = () => {
     return () => clearInterval(reminderInterval);
   }, [isCounting, interval]);
 
-  currentBottleVolume;
+  // currentBottleVolume;
 
   const handleFinish = () => {
     toast.info("Acabou por Hoje! ");
@@ -121,31 +103,52 @@ const Home = () => {
     });
   };
 
+  function handleSave() {
+    console.log("handleSave na home");
+  }
+
+  const handleStart = () => {
+    if (!userData.name) {
+      setShowSettings(true);
+    } else {
+      setIsCounting(true);
+      setShowButtonStart(false);
+    }
+    // setIsCounting(true);
+  };
+
   return (
     <>
-      {show ? (
-        <ModalDrink
-          show={show}
-          onClose={() => handleCancel()}
-          onClick={() => handleAdd()}
-        />
-      ) : null}
+      <ModalSettings
+        showSettings={showSettings}
+        handleSave={handleSave}
+        onClose={() => setShowSettings(false)}
+        setShowButtonStart={setShowButtonStart}
+      />
+      <ModalDrink
+        show={show}
+        onClose={() => handleCancel()}
+        onClick={() => handleAdd()}
+      />
       <PreventPageReload />
       <ToastContainer hideProgressBar={true} />
 
-      <Header />
       <div className={styles.outerContainer}>
         <div className={styles.topSide}>
+          <Header />
           <WaterTime
+            handleStart={handleStart}
             cups={cups}
             pauses={pauses}
-            dailyGoal={dailyGoal}
+            dailyGoal={waterGoal}
             currentBottleVolume={currentBottleVolume}
             bottleCapacity={bottleCapacity}
             endOfDay={endOfDay}
             handleFinish={() => handleFinish()}
+            showButtonStart={showButtonStart}
           />
-
+        </div>
+        <div className={styles.bottonSide}>
           <TabInfo
             date={nextReminder}
             cups={cups}
