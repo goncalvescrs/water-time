@@ -50,7 +50,7 @@ function Header() {
                     />
 
                     <a className={styles.navLink} href="#">
-                      {"Olá " + userData.name}
+                      {userData.name ? userData?.name : "Cadastrar"}
                     </a>
                   </li>
                   <li className={styles.navItem}>
@@ -88,7 +88,9 @@ function Header() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="">Olá {userData.name}</Dropdown.Item>
+                      <Dropdown.Item href="">
+                        {userData.name ? "Olá " + userData.name : "Cadastrar"}
+                      </Dropdown.Item>
                       <Dropdown.Divider />
                       <Dropdown.Item href="#/action-1">
                         Action 01 jhjhjs

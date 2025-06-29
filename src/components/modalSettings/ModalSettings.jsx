@@ -5,10 +5,14 @@ import styles from "./styles.module.css";
 import context from "react-bootstrap/esm/AccordionContext";
 import { UserContext } from "../../context/UserContext";
 
-function ModalSettings({ showSettings, handleSave, onClose, setButtonStart }) {
-  const { userData, fechUserLocalStorage, saveUserLocalStorage } =
-    useContext(UserContext);
-  const [user, setUser] = useState(userData);
+function ModalSettings({
+  showSettings,
+  handleSave,
+  onClose,
+  setShowButtonStart,
+}) {
+  const { userData, saveUserLocalStorage } = useContext(UserContext);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     if (userData) {
@@ -17,11 +21,11 @@ function ModalSettings({ showSettings, handleSave, onClose, setButtonStart }) {
   }, [userData]);
 
   const save = () => {
-    console.log("salvoou no local storage");
+    console.log("Modal: salvou no localStorage");
     saveUserLocalStorage(user);
     handleSave();
     onClose();
-    setButtonStart(true);
+    setShowButtonStart(true);
   };
 
   if (!showSettings) return null;
@@ -44,42 +48,42 @@ function ModalSettings({ showSettings, handleSave, onClose, setButtonStart }) {
             <h5>Nome:</h5>
             <input
               type="text"
-              value={user.name}
+              value={user?.name}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
               required
             />
             <h5>Idade:</h5>
             <input
               type="number"
-              value={user.age}
+              value={user?.age}
               onChange={(e) => setUser({ ...user, age: e.target.value })}
               required
             />
             <h5>Peso:</h5>
             <input
               type="number"
-              value={user.weight}
+              value={user?.weight}
               onChange={(e) => setUser({ ...user, weight: e.target.value })}
               required
             />
             <h5>Altura:</h5>
             <input
               type="number"
-              value={user.height}
+              value={user?.height}
               onChange={(e) => setUser({ ...user, height: e.target.value })}
               required
             />
             <h5>Horas de sono:</h5>
             <input
               type="number"
-              value={user.sleep}
+              value={user?.sleep}
               onChange={(e) => setUser({ ...user, sleep: e.target.value })}
               required
             />
             <h5>Capacidade da garrafa: {"(ml)"}</h5>
             <input
               type="number"
-              value={user.bottle}
+              value={user?.bottle}
               onChange={(e) => setUser({ ...user, bottle: e.target.value })}
               required
             />

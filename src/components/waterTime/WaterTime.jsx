@@ -44,7 +44,7 @@ const WaterTime = ({ handleStart, handleFinish, ...props }) => {
         return;
       }
 
-      if (props.cups === MAX_CUPS) {
+      if (props.dailyGoal > 0 && props.cups === MAX_CUPS) {
         handleFinish();
         return;
       }
@@ -95,7 +95,9 @@ const WaterTime = ({ handleStart, handleFinish, ...props }) => {
         />
         <span className={{}}>
           {" "}
-          {`Capacidade da garrafa: ${props.currentBottleVolume} ml / ${props.bottleCapacity} ml`}
+          {`Capacidade da garrafa: ${props.currentBottleVolume} ml / ${
+            props.bottleCapacity || 0
+          } ml`}
         </span>
       </div>
     </>

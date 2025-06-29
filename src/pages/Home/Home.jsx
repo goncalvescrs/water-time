@@ -19,9 +19,9 @@ import ModalSettings from "../../components/modalSettings/ModalSettings";
 import { Button } from "react-bootstrap";
 
 const Home = () => {
-  const { userData } = useContext(UserContext);
-  console.log(userData);
-  const [user, setUser] = useState(userData || {});
+  const { userData, fetchUser } = useContext(UserContext);
+  console.log("User na home: ", userData);
+
   const [show, setShow] = useState(false);
   const [cups, setCups] = useState(0);
   const [cancel, setCancel] = useState(0);
@@ -33,9 +33,9 @@ const Home = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showButtonStart, setShowButtonStart] = useState(true);
 
-  const waterGoal = dailyGoalCalculate(user.age, user.weight);
-  const sleepHours = userData.sleep;
-  const bottleCapacity = userData.bottle;
+  const waterGoal = dailyGoalCalculate(userData?.age, userData?.weight);
+  const sleepHours = userData?.sleep;
+  const bottleCapacity = userData?.bottle;
   const drinkingAmount = 250; // Quantidade de água a ser bebida em cada pausa
   const wakingHours = 24 - sleepHours; // Horas acordadas no dia
   const pauses = Math.ceil(waterGoal / drinkingAmount); // Número de pausas necessárias arredondado pra cima
@@ -43,6 +43,10 @@ const Home = () => {
   const endOfDay = getEndOfDay(startTime, wakingHours); // Calcula o horario de termino
 
   function breakCalculate(age) {}
+
+  useEffect(() => {
+    fetchUser();
+  }, [showSettings]);
 
   useEffect(() => {
     if (!isCounting) return;
@@ -104,7 +108,7 @@ const Home = () => {
   };
 
   function handleSave() {
-    console.log("handleSave na home");
+    console.log("home: clicou em handleSave");
   }
 
   const handleStart = () => {
@@ -112,6 +116,7 @@ const Home = () => {
       setShowSettings(true);
     } else {
       setIsCounting(true);
+
       setShowButtonStart(false);
     }
     // setIsCounting(true);

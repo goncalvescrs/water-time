@@ -1,31 +1,20 @@
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 
 export const dailyGoalCalculate = (age, weight) => {
-  if (age > 0 && weight > 0) {
+  if (age != null && weight != null) {
     let mlPerKg;
-    switch (true) {
-      case age <= 17:
-        mlPerKg = 40;
-        break;
-      case age >= 18 && age <= 55:
-        mlPerKg = 35;
-        break;
-      case age >= 56 && age <= 65:
-        mlPerKg = 30;
-        break;
-      case age >= 66:
-        mlPerKg = 25;
-        break;
-      default:
-        throw new Error("Idade inválida.");
+    if (age <= 17) {
+      mlPerKg = 40;
+    } else if (age <= 55) {
+      mlPerKg = 35;
+    } else if (age <= 65) {
+      mlPerKg = 30;
+    } else {
+      mlPerKg = 25;
     }
-
-    const dailyGoal = weight * mlPerKg;
-    return dailyGoal;
-  } else {
-    toast.warn("Dados de usuario nao encontrado!");
+    return weight * mlPerKg;
   }
+  return null;
 };
 
 export function formatarNumero(valor) {
