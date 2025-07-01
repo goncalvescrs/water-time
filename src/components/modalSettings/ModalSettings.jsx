@@ -28,7 +28,7 @@ function ModalSettings({ showSettings, handleSave, onClose }) {
         show={showSettings}
         onHide={onClose}
         centered
-        scrollable
+        // scrollable
       >
         <form onSubmit={() => save(user)}>
           <Modal.Header closeButton>

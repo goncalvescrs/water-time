@@ -4,7 +4,7 @@
   margin: 0 auto;
   border-bottom: 2px solid #336588;
   padding-bottom: 5px;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
 }
 
 /* Navbar */
@@ -23,11 +23,12 @@
 
 .brand {
   display: flex;
-  align-items: center; /* Alinha os itens verticalmente no centro */
+  align-items: center;
+  justify-content: center;
 }
 
 .brandName {
-  color: #ffffff; /* Cor dos textos */
+  color: #ffffff;
   text-decoration: none;
   font-size: 20px;
   font-weight: 700;
@@ -36,7 +37,7 @@
 
 .navLink:hover,
 .navbarBrand:hover {
-  color: #f8f9fa; /* Cor do texto ao passar o mouse */
+  color: #f8f9fa;
 }
 
 .navItem {

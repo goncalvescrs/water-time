@@ -36,15 +36,10 @@ function Header({ handleSave }) {
             <div className={styles.navContainer}>
               <div className={styles.brand}>
                 <MdWaterDrop color="#FFFFFF" size={30} />
-                <a className={styles.brandName} href="#">
-                  WaterTime
-                </a>
+                <span className={styles.brandName}>WaterTime</span>
               </div>
               <div>
                 <ul className={styles.navList}>
-                  {/* <li className={styles.navItem}>
-                                    <a className={styles.navLink} href="#">Home</a>
-                                </li> */}
                   <li className={styles.navItem}>
                     <RiInformation2Fill
                       color="#FFF"
@@ -69,24 +64,10 @@ function Header({ handleSave }) {
                     </a>
                   </li>
                   <li className={styles.navItem}>
-                    {!userData?.name ? (
-                      <>
-                        <FaUser color="#FFF" style={{ marginRight: "5px" }} />
-                        <a className={styles.navLink} href="/cadastro">
-                          {"Cadastrar"}
-                        </a>
-                      </>
-                    ) : (
-                      <>
-                        <FaUserCircle
-                          color="#FFF"
-                          style={{ marginRight: "5px" }}
-                        />
-                        <a className={styles.navLink}>
-                          {`Olá ${userData?.name}`}
-                        </a>
-                      </>
-                    )}
+                    <FaUser color="#FFF" style={{ marginRight: "5px" }} />
+                    <a className={styles.navLink} href="/cadastro">
+                      {"Cadastrar"}
+                    </a>
                   </li>
                   <Dropdown align="end">
                     <Dropdown.Toggle
