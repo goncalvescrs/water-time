@@ -21,20 +21,18 @@ export function formatarNumero(valor) {
   return valor.toFixed(1);
 }
 
-export const PreventPageReload = () => {
+export const PreventPageReload = (isCounting) => {
   useEffect(() => {
+    if (!isCounting) return;
     const handleBeforeUnload = (event) => {
-      const confirmationMessage =
-        "Tem certeza de que deseja sair desta página? O Contagem vai recomeçar.";
-      event.preventDefault();
-      event.returnValue = confirmationMessage; // Necessário para funcionar no Chrome
-      return confirmationMessage; // Para outros navegadores
+      event.preventDefault(); // Para a maioria dos navegadores
+      event.returnValue = ""; // Chrome exige isso para exibir o alerta
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [isCounting]);
 
   return null;
 };

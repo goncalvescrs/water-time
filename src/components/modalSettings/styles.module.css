@@ -1,1 +1,24 @@
+.modal_body {
+  background-color: #f7f7f7;
+  margin: 15px;
+}
 
+.form_title {
+  font-size: 20px;
+}
+
+.input_name {
+  color: #6b6b6b;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+.input {
+  background-color: #efefef;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 1rem;
+  width: 60%;
+  /* box-shadow: 1px 2px 5px #c2c2c2; */
+}

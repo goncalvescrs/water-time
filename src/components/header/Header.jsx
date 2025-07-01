@@ -92,15 +92,6 @@ function Header({ handleSave }) {
                         <FaCrown />
                         {" Premium"}
                       </Dropdown.Item>
-
-                      {/* <Dropdown.Divider /> */}
-                      {/* <Dropdown.Item
-                        className={styles.Dropdown_item}
-                        href=""
-                        onClick={handleLogout}
-                      >
-                        <MdLogout size={20} /> Sair
-                      </Dropdown.Item> */}
                     </Dropdown.Menu>
                   </Dropdown>
                 </ul>
