@@ -1,16 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "./styles.module.css";
-import context from "react-bootstrap/esm/AccordionContext";
 import { UserContext } from "../../context/UserContext";
 
-function ModalSettings({
-  showSettings,
-  handleSave,
-  onClose,
-  setShowButtonStart,
-}) {
+function ModalSettings({ showSettings, handleSave, onClose }) {
   const { userData, saveUserLocalStorage } = useContext(UserContext);
   const [user, setUser] = useState("");
 
@@ -20,12 +14,10 @@ function ModalSettings({
     }
   }, [userData]);
 
-  const save = () => {
-    console.log("Modal: salvou no localStorage");
+  const save = (user) => {
     saveUserLocalStorage(user);
     handleSave();
     onClose();
-    setShowButtonStart(true);
   };
 
   if (!showSettings) return null;
@@ -38,7 +30,7 @@ function ModalSettings({
         centered
         scrollable
       >
-        <form onSubmit={save}>
+        <form onSubmit={() => save(user)}>
           <Modal.Header closeButton>
             <Modal.Title>Configurações</Modal.Title>
           </Modal.Header>

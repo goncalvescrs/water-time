@@ -1,79 +1,91 @@
 .container {
-    width: 100%;
-    max-width: 750px;  
-    margin: 0 auto; 
-    border-bottom: 2px solid #336588;
-    padding-bottom: 5px;
-    font-family: 'Poppins', sans-serif;  
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  border-bottom: 2px solid #336588;
+  padding-bottom: 5px;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Navbar */
 .navbar {
-    color: #ffffff;
-    padding-block: 10px; 
+  color: #ffffff;
+  padding-block: 10px;
 }
 
 /* Container interno */
 .navContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .brand {
-    display: flex;
-    align-items: center;  /* Alinha os itens verticalmente no centro */
+  display: flex;
+  align-items: center; /* Alinha os itens verticalmente no centro */
 }
-
-
 
 .brandName {
-    color: #ffffff;  /* Cor dos textos */
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 700;
-    margin-left: 2px;
+  color: #ffffff; /* Cor dos textos */
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 2px;
 }
 
-.navLink:hover, .navbarBrand:hover {
-    color: #f8f9fa;  /* Cor do texto ao passar o mouse */   
+.navLink:hover,
+.navbarBrand:hover {
+  color: #f8f9fa; /* Cor do texto ao passar o mouse */
 }
 
 .navItem {
-    list-style: none;
-    background-color: #4D7FA2;
-    padding: 5px 10px;
-    margin-right: 10px; /* Espaço entre os itens */
-    display: flex;
-    justify-content: center; /* Centraliza o texto horizontalmente */
-    align-items: center; /* Centraliza o texto verticalmente */
-    height: 40px; /* Ajuste conforme necessário */
-    border-radius: 5px; /* Adiciona cantos arredondados opcionalmente */
+  list-style: none;
+  background-color: #4d7fa2;
+  padding: 5px 10px;
+  margin-right: 10px; /* Espaço entre os itens */
+  display: flex;
+  justify-content: center; /* Centraliza o texto horizontalmente */
+  align-items: center; /* Centraliza o texto verticalmente */
+  height: 40px; /* Ajuste conforme necessário */
+  border-radius: 5px; /* Adiciona cantos arredondados opcionalmente */
 }
 
 .navList {
-    display: flex;
-    justify-content: flex-start; /* Ajusta conforme necessário */
-    align-items: center;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  justify-content: flex-start; /* Ajusta conforme necessário */
+  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 .navLink {
-    color: #FFFFFF; /* Cor do texto */
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    height: 100%; /* Assegura que o link ocupe toda a altura do item */
+  color: #ffffffae;
+  font-size: 13px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
-.Dropdown{
-    background-color: #4D7FA2;  
-    color: #FFF;
+.Dropdown,
+.Dropdown:hover,
+.Dropdown:focus,
+.Dropdown:active,
+.dropdown:after {
+  background-color: #4d7fa2 !important;
+  border: 1px solid #336588 !important;
+  color: #fff;
 }
 
-.Dropdown:hover{
-    background-color: #336588;
-    color: #FFF;
+.Dropdown_item {
+  font-size: 14px;
+}
+.Dropdown_item:hover {
+  background-color: #d7d7d78e;
+}
+
+.Dropdown_item:active {
+  background-color: #bdbdbd00;
+  color: #000;
 }

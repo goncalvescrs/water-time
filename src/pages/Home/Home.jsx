@@ -109,6 +109,7 @@ const Home = () => {
 
   function handleSave() {
     console.log("home: clicou em handleSave");
+    setShowButtonStart(false);
   }
 
   const handleStart = () => {
@@ -140,7 +141,7 @@ const Home = () => {
 
       <div className={styles.outerContainer}>
         <div className={styles.topSide}>
-          <Header />
+          <Header handleSave={handleSave} />
           <WaterTime
             handleStart={handleStart}
             cups={cups}
